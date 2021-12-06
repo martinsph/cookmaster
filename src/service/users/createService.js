@@ -26,10 +26,7 @@ const emailExists = async (email) => {
 };
 
 module.exports = async (newUser) => {
-  const { name, email, password, role } = newUser;
-  const userName = name;
-  const userEmail = email;
-  const userRole = role;
+  const { name, email, password } = newUser;
 
   isValidName(name);
   isValidEmail(email);
@@ -38,10 +35,5 @@ module.exports = async (newUser) => {
 
   const result = await user.create(newUser);
 
-  return { 
-    name: userName,
-    quantity: userEmail,
-    role: userRole,
-    _id: result.insertedId,
-  };
+  return result.ops[0];
 };

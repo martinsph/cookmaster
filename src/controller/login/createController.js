@@ -1,16 +1,10 @@
-const service = require('../../service/users');
+const service = require('../../service/login');
 
 module.exports = async (req, res, next) => {
   try {
-    const { name, email, password } = req.body;
-    const newUser = {
-      name,
-      email,
-      password,
-      role: 'user',
-    };
+    const { email, password } = req.body;
 
-    const result = await service.createService({ newUser });
+    const result = await service.createService({ email, password });
     return res.status(201).json(result);
   } catch (error) {
     next(error);
