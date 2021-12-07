@@ -2,25 +2,21 @@ const jwt = require('jsonwebtoken');
 
 const apiSecret = 'mysecret';
 
-const jwtConfig = {
-  expiresin: '1d',
-  algorithm: 'HS256',
-};
-
-const createToken = async (payload) => {
-  const token = jwt.sign(payload, apiSecret, jwtConfig);
-  return token;
-};
-
-const validateToken = (token) => {
+module.exports = (req, res, next) => {
   try {
-    return jwt.verify(token, apiSecret);
-  } catch (err) {
-    console.log(err);
-  }
-};
+    const { authorization } = req.header;
 
-module.exports = {
-  createToken,
-  validateToken,
+    if (authorization === null) {
+      return res.status(401).send({ message: 'missing auth token' });
+    }
+
+    try {
+      const decoded = jwt.verify(authorization, apiSecret);
+      return decoded;
+    } catch (err) {
+    return res.status(401).send({ message: 'jwt malformed' });
+    }
+  } catch (err) {
+    next(err);
+  }
 };

@@ -7,17 +7,17 @@ const errors = {
 };
 
 const isValidName = (name) => {
-  if (name == null) throw errors.invalidEntries;
+  if (name === null) throw errors.invalidEntries;
 };
 
 const isValidEmail = (email) => {
   const regex = /\S+@\S+\.\S+/;
-  if (email == null) throw errors.invalidEntries;
+  if (email === null) throw errors.invalidEntries;
   if (!regex.test(email)) throw errors.invalidEntries;
 };
 
 const isValidPassword = (password) => {
-  if (password == null) throw errors.invalidEntries;
+  if (password === null) throw errors.invalidEntries;
 };
 
 const emailExists = async (email) => {
@@ -33,7 +33,7 @@ module.exports = async (newUser) => {
   isValidPassword(password);
   await emailExists(email);
 
-  const result = await user.create(newUser);
+  const result = await user.createModel(newUser);
 
   return result.ops[0];
 };

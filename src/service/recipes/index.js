@@ -1,7 +1,13 @@
 const createService = require('./createService');
-const getAllService = require('./getAllService');
+const listService = require('./listService');
+const getByIdService = require('./getByIdService');
+const updateService = require('./updateService');
+const removeService = require('./removeService');
 
 module.exports = {
   createService,
-  getAllService,
+  listService,
+  removeService,
+  getByIdService,
+  updateService,
 };

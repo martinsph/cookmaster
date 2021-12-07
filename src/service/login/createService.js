@@ -1,9 +1,18 @@
+const jwt = require('jsonwebtoken');
 const getByEmail = require('./getByEmailService');
-const createToken = require('../../midlleware/auth');
+
+const apiSecret = 'mysecret';
+
+const jwtConfig = {
+  expiresIn: '1d',
+  algorithm: 'HS256',
+};
 
 const errors = {
   invalidEntries: { status: 401, message: 'All fields must be filled' },
   incorrectEntries: { status: 401, message: 'Incorrect username or password' },
+  incorrectEntries2: { status: 401, message: '2' },
+
 };
 
 const isValidEmail = (email) => {
@@ -18,19 +27,20 @@ const isValidPassword = (password) => {
 
 const emailExists = async (email, password) => {
   const checkEmail = await getByEmail(email);
-  if (checkEmail !== null || checkEmail.password !== password) throw errors.incorrectEntries;
+  if (checkEmail === null) throw errors.incorrectEntries;
+  if (checkEmail.password !== password) throw errors.incorrectEntries2;
+
+  const { password: pass, ...payload } = checkEmail;
+  const token = jwt.sign(payload, apiSecret, jwtConfig);
+  return token;
 };
 
 module.exports = async (newUser) => {
   const { email, password } = newUser;
-
+  
   isValidEmail(email);
   isValidPassword(password);
-  emailExists(email);
-
-  const checkEmail = await getByEmail(email);
-  const { password: pass, ...dataleft } = checkEmail;
-  const token = createToken(...dataleft);
+  const token = await emailExists(email, password);
 
   return token;
 };
