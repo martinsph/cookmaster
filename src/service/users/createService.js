@@ -3,11 +3,11 @@ const getByEmail = require('./getByEmailService');
 
 const errors = {
   invalidEntries: { status: 400, message: 'Invalid entries. Try again.' },
-  emailFound: { status: 409, message: 'Email already resgistered' },
+  emailFound: { status: 409, message: 'Email already registered' },
 };
 
 const isValidName = (name) => {
-  if (name === null) throw errors.invalidEntries;
+  if (!name) throw errors.invalidEntries;
 };
 
 const isValidEmail = (email) => {
@@ -34,6 +34,8 @@ module.exports = async (newUser) => {
   await emailExists(email);
 
   const result = await user.createModel(newUser);
+  const { password: pass, ...dataWhithoutPassword } = result.ops[0];
+  console.log(dataWhithoutPassword);
 
-  return result.ops[0];
+  return { user: dataWhithoutPassword };
 };

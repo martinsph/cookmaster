@@ -5,7 +5,7 @@ module.exports = async (req, res, next) => {
     const { email, password } = req.body;
 
     const result = await service.createService({ email, password });
-    return res.status(201).json(result);
+    return res.status(200).json(result);
   } catch (error) {
     next(error);
   }
