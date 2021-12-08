@@ -23,22 +23,18 @@ const isValidPassword = (password) => {
   if (password == null) throw errors.invalidEntries;
 };
 
-const emailExists = async (email, password) => {
-  const checkEmail = await getByEmail(email);
-  if (checkEmail === null) throw errors.incorrectEntries;
-  if (checkEmail.password !== password) throw errors.incorrectEntries;
-
-  const { password: pass, ...payload } = checkEmail;
-  const token = jwt.sign(payload, apiSecret, jwtConfig);
-  return token;
-};
-
 module.exports = async (newUser) => {
   const { email, password } = newUser;
   
   isValidEmail(email);
   isValidPassword(password);
-  const token = await emailExists(email, password);
+  
+  const checkEmail = await getByEmail(email);
+  if (checkEmail === null) throw errors.incorrectEntries;
+  if (checkEmail.password !== password) throw errors.incorrectEntries;
+
+  const { password: pass, ...payload } = checkEmail;
+  const token = jwt.sign({ data: payload }, apiSecret, jwtConfig);
 
   return token;
 };

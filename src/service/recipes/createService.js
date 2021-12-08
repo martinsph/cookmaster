@@ -19,13 +19,13 @@ const isValidPreparation = (preparation) => {
 
 module.exports = async (newRecipe) => {
   const { name, ingredients, preparation } = newRecipe;
+  console.log(newRecipe);
 
   isValidName(name);
   isValidIngredients(ingredients);
   isValidPreparation(preparation);
 
   const result = (await recipes.createModel(newRecipe)).ops[0];
-  console.log(result);
 
-  return { recipe: { result } };
+  return { recipe: result };
 };

@@ -12,8 +12,12 @@ module.exports = (req, res, next) => {
 
     try {
       const decoded = jwt.verify(token, apiSecret);
+      
       console.log(decoded);
-      return decoded;
+      
+      req.user = decoded.data;
+      
+      next();
     } catch (err) {
     return res.status(401).send({ message: 'jwt malformed' });
     }
