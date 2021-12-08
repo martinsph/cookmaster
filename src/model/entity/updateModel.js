@@ -5,7 +5,7 @@ const connection = require('../connection');
 // linha 8 desestrutura id e resto de entity (name, quantity) para usar no updateOne.
 module.exports = async (collection, entity) => {
   try {
-    const { id, name, ingredients, preparation } = entity;
+    const { id, name, ingredients, preparation, userId } = entity;
     const connecting = await connection();
     const result = await connecting.collection(collection).updateOne(
       { _id: ObjectId(id) },
@@ -14,6 +14,7 @@ module.exports = async (collection, entity) => {
           name,
           ingredients,
           preparation,
+          userId,
         },
       },
     );

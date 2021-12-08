@@ -34,6 +34,7 @@ module.exports = async (newUser) => {
   if (checkEmail.password !== password) throw errors.incorrectEntries;
 
   const { password: pass, ...payload } = checkEmail;
+  
   const token = jwt.sign({ data: payload }, apiSecret, jwtConfig);
 
   return token;

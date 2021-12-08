@@ -6,14 +6,12 @@ module.exports = (req, res, next) => {
   try {
     const token = req.headers.authorization;
 
-    if (token === null) {
+    if (!token) {
       return res.status(401).send({ message: 'missing auth token' });
     }
 
     try {
       const decoded = jwt.verify(token, apiSecret);
-      
-      console.log(decoded);
       
       req.user = decoded.data;
       

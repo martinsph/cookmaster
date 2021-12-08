@@ -6,20 +6,19 @@ const errors = {
 };
 
 const isValidName = (name) => {
-  if (name === null) throw errors.invalidEntries;
+  if (name === undefined) throw errors.invalidEntries;
 };
 
 const isValidIngredients = (ingredients) => {
-  if (ingredients === null) throw errors.invalidEntries;
+  if (ingredients === undefined) throw errors.invalidEntries;
 };
 
 const isValidPreparation = (preparation) => {
-  if (preparation === null) throw errors.invalidEntries;
+  if (preparation === undefined) throw errors.invalidEntries;
 };
 
 module.exports = async (newRecipe) => {
   const { name, ingredients, preparation } = newRecipe;
-  console.log(newRecipe);
 
   isValidName(name);
   isValidIngredients(ingredients);
