@@ -3,6 +3,7 @@ const listService = require('./listService');
 const getByIdService = require('./getByIdService');
 const updateService = require('./updateService');
 const removeService = require('./removeService');
+const uploadService = require('./uploadService');
 
 module.exports = {
   createService,
@@ -10,4 +11,5 @@ module.exports = {
   removeService,
   getByIdService,
   updateService,
+  uploadService,
 };
