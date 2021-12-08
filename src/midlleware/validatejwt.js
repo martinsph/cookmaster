@@ -4,14 +4,15 @@ const apiSecret = 'mysecret';
 
 module.exports = (req, res, next) => {
   try {
-    const { authorization } = req.header;
+    const token = req.headers.authorization;
 
-    if (authorization === null) {
+    if (token === null) {
       return res.status(401).send({ message: 'missing auth token' });
     }
 
     try {
-      const decoded = jwt.verify(authorization, apiSecret);
+      const decoded = jwt.verify(token, apiSecret);
+      console.log(decoded);
       return decoded;
     } catch (err) {
     return res.status(401).send({ message: 'jwt malformed' });

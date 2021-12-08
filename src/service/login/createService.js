@@ -11,8 +11,6 @@ const jwtConfig = {
 const errors = {
   invalidEntries: { status: 401, message: 'All fields must be filled' },
   incorrectEntries: { status: 401, message: 'Incorrect username or password' },
-  incorrectEntries2: { status: 401, message: '2' },
-
 };
 
 const isValidEmail = (email) => {
@@ -28,7 +26,7 @@ const isValidPassword = (password) => {
 const emailExists = async (email, password) => {
   const checkEmail = await getByEmail(email);
   if (checkEmail === null) throw errors.incorrectEntries;
-  if (checkEmail.password !== password) throw errors.incorrectEntries2;
+  if (checkEmail.password !== password) throw errors.incorrectEntries;
 
   const { password: pass, ...payload } = checkEmail;
   const token = jwt.sign(payload, apiSecret, jwtConfig);

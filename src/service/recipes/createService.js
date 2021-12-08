@@ -25,6 +25,7 @@ module.exports = async (newRecipe) => {
   isValidPreparation(preparation);
 
   const result = (await recipes.createModel(newRecipe)).ops[0];
+  console.log(result);
 
   return { recipe: { result } };
 };

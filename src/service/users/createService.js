@@ -35,7 +35,6 @@ module.exports = async (newUser) => {
 
   const result = await user.createModel(newUser);
   const { password: pass, ...dataWhithoutPassword } = result.ops[0];
-  console.log(dataWhithoutPassword);
 
   return { user: dataWhithoutPassword };
 };

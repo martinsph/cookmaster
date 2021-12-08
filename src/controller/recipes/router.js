@@ -4,14 +4,14 @@ const listController = require('./listController');
 const getByIdController = require('./getByIdController');
 const updateController = require('./updateController');
 const removeController = require('./removeController');
-const auth = require('../../midlleware/auth');
+const validadejwt = require('../../midlleware/validatejwt');
 
 const router = express.Router({ mergeParams: true });
 
-router.post('/', auth, createController);
+router.post('/', validadejwt, createController);
 router.get('/', listController);
 router.get('/:id', getByIdController);
-router.put('/:id', updateController);
-router.delete('/:id', removeController);
+router.put('/:id', validadejwt, updateController);
+router.delete('/:id', validadejwt, removeController);
 
 module.exports = router;
